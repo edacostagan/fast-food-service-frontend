@@ -1,0 +1,31 @@
+<app-title title="Available Options!" margin="1.5rem 0 0 2.5rem"></app-title>
+
+<app-not-found
+  [visible]="!menus || !menus.length"
+  resetLinkText="There is no Menu Options at the moment! Try later"
+></app-not-found>
+<ul>
+  <li *ngFor="let menu of menus">
+    <a routerLink='{{menu._id}}'>
+      <img [src]="menu.menuImageUrl" [alt]="menu.menuName" />
+      <div class="content">
+        <div class="name">
+          {{menu.menuName}}
+        </div>
+        <div class="description">
+          <span>
+            {{menu.menuDescription}}
+          </span>
+        </div>
+        <div class="price">
+          <span>
+            {{menu.menuPrice | currency}}
+          </span>
+        </div>
+
+      </div>
+    </a>
+
+  </li>
+</ul>
+

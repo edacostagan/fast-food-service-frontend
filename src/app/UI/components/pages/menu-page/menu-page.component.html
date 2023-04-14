@@ -1,0 +1,28 @@
+<app-not-found
+  [visible]="!menu"
+  notFoundMessage="The Menu Option you want, for some reason is not here!"
+  resetLinkText="Back to Homepage">
+</app-not-found>
+
+<div *ngIf="menu" class="container">
+  <img [src]="menu.menuImageUrl" [alt]="menu.menuName" />
+
+  <div class="details">
+    <div class="header">
+      <span class="name">
+        {{menu.menuName}}
+      </span>
+    </div>
+    <div class="description">
+      <span >
+        {{menu.menuDescription}}
+      </span>
+    </div>
+    <div class="price">
+      <span >
+        {{menu.menuPrice | currency}}
+      </span>
+    </div>
+    <button (click)="addToOrder()">Add to Order</button>
+  </div>
+</div>

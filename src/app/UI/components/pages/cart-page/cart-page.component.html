@@ -1,0 +1,49 @@
+<app-title title="Order Page" margin="1.5rem 0 0 2.5rem"></app-title>
+
+<app-not-found
+  [visible]="!order || !order.items.length"
+  notFoundMessage="There is no Order yet!"
+  resetLinkText="Go to Homepage"
+></app-not-found>
+
+<div *ngIf="order && order.items.length" class="container">
+  <ul>
+    <li *ngFor="let orderItem of order.items">
+      <div>
+        <img [src]="orderItem.menu.menuImageUrl" [alt]="orderItem.menu.menuName">
+      </div>
+      <div>
+        <a routerLink="/menu/{{orderItem.menu._id}}">
+          {{orderItem.menu.menuName}}
+        </a>
+      </div>
+      <div>
+        <select #quantitySelect
+          [value]="orderItem.quantity"
+          (change)="changeQuantity(orderItem, quantitySelect.value)">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>10</option>
+        </select>
+      </div>
+      <div>
+        {{orderItem.price | currency}}
+      </div>
+      <div>
+        <button class="remove-button" (click)="removeFromOrder(orderItem)">
+          Remove
+        </button>
+      </div>
+    </li>
+  </ul>
+  <div class="checkout">
+    <div>
+      <div class="order-count">{{order.itemsCount}}</div>
+      <div class="order-price">{{order.totalPrice | currency}}</div>
+    </div>
+    <a routerLink="/checkout">Proceed to Checkout</a>
+  </div>
+</div>

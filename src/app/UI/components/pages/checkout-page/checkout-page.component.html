@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="details">
+
+    <app-title title="Order"></app-title>
+
+    <form [formGroup]="checkoutForm">
+
+      <text-input [control]="fc['userFullname']" label="Name">
+      </text-input>
+
+      <text-input [control]="fc['userAddress']" label="Address">
+      </text-input>
+    </form>
+
+    <order-items-list [order]="cart"></order-items-list>
+
+  </div>
+  <div class="buttons-container">
+    <div class="buttons">
+      <button (click)="createOrder()">
+        Confirm Order!
+      </button>
+    </div>
+  </div>
+</div>
