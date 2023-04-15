@@ -4,6 +4,6 @@ export class UserEntity {
   userFullname!: string;
   userAddress!: string;
   userMobilePhone!: string;
-  isAdmin!: boolean;
+  userIsAdmin!: boolean;
   token!:string;
 }

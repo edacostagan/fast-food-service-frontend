@@ -6,6 +6,7 @@ import { MenuPageComponent } from './UI/components/pages/menu-page/menu-page.com
 const routes: Routes = [
 
   { path: 'components', loadChildren: () => import('./UI/components/components.module').then(m => m.ComponentsModule) },
+  { path: 'management', loadChildren: () => import('./UI/components/pages/management/management.module').then(m => m.ManagementModule) },
   { path: 'menu', component: HomeComponent },
   { path: 'menu/:id', component: MenuPageComponent },
   { path: '', pathMatch: 'full', redirectTo: 'menu' },

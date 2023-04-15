@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 import { environment } from '../environments/environment';
 
@@ -19,6 +19,9 @@ import { OrderApiService } from './infrastructure/services/order.service';
 import { AuthInterceptor } from './infrastructure/interceptors/auth.interceptor';
 import { LoadingInterceptor } from './infrastructure/interceptors/loading.interceptor';
 import { ComponentsModule } from './UI/components/components.module';
+import { ManagementComponent } from './UI/components/pages/management/management.component';
+import { ComponentsComponent } from './UI/components/components.component';
+import { ManagementModule } from './UI/components/pages/management/management.module';
 
 
 @NgModule({
@@ -31,6 +34,7 @@ import { ComponentsModule } from './UI/components/components.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     ComponentsModule,
+    ManagementModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

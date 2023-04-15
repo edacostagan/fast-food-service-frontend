@@ -23,6 +23,9 @@ import { TitleComponent } from './shared/title/title.component';
 import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { PendingsComponent } from './pages/pendings/pendings.component';
+import { MenuOptionComponent } from './pages/menu-option/menu-option.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { LoadingComponent } from './shared/loading/loading.component';
     LoginPageComponent,
     RegisterPageComponent,
     CheckoutPageComponent,
-    PaymentPageComponent
+    PaymentPageComponent,
+    PendingsComponent,
+    MenuOptionComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

@@ -1,14 +1,20 @@
 <header>
-
   <div class="container">
-
     <a routerLink="/" class="logo"> Fast Food Service! </a>
     <nav>
       <ul>
         <li *ngIf="!isAuth">
           <a routerLink="/login">Login</a>
         </li>
-        <li *ngIf="isAuth" class="menu-container">
+        <li *ngIf="isAuth && isAdmin" class="menu-container">
+          <a routerLink="/admin">Admin Area</a>
+          <div class="menu">
+            <a routerLink="/pendings">Pending Orders</a>
+            <a routerLink="/newMenu">Add Menu Option</a>
+            <a (click)="logout()">Logout</a>
+          </div>
+        </li>
+        <li *ngIf="isAuth && !isAdmin" class="menu-container">
           <a routerLink="/dashboard">{{user.userFullname}}</a>
           <div class="menu">
             <a routerLink="/profile">Profile</a>
@@ -16,8 +22,9 @@
             <a (click)="logout()">Logout</a>
           </div>
         </li>
-        <li>
-          <a routerLink="/cart">Cart
+        <li *ngIf="!isAdmin">
+          <a routerLink="/cart">
+            Cart
             <span *ngIf="orderCount"> {{orderCount}} </span>
           </a>
         </li>

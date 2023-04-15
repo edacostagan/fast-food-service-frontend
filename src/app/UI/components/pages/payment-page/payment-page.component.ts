@@ -71,9 +71,9 @@ export class PaymentPageComponent implements OnInit {
         this.toastrService.success(
           `Order succesfully paid!`,
           'Going back to work boys!');
+
           this.getAllUserOrders();
 
-          //this.router.navigateByUrl(this.returnUrl);
       }),
       error: () => {
         this.toastrService.warning(
@@ -128,6 +128,8 @@ export class PaymentPageComponent implements OnInit {
         this.toastrService.success(
           `Order has been Delivered!`,
           'Enjoy Compadre!');
+
+          this.getAllUserOrders();
       }),
       error: () => {
         this.toastrService.warning(

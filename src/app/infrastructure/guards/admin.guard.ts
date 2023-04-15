@@ -6,27 +6,27 @@ import { UserApiService } from '../services/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
   constructor(
     private userService: UserApiService,
     private router: Router
-  ) { }
+  ){}
 
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.userService.currentUser.token) {
-      if (!this.userService.currentUser.userIsAdmin)
-      {
-        return true;
+      if (this.userService.currentUser.token) {
+        if (this.userService.currentUser.userIsAdmin)
+        {
+          return true;
+        }
       }
-    }
 
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    return false;
+      this.router.navigate(['/login'], {queryParams:{returnUrl: state.url}});
+      return false;
 
 
   }
