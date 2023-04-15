@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { OrderApiService } from './order.service';
+import { AppModule } from '../../../app/app.module';
 
 describe('OrderService', () => {
   let service: OrderApiService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports:[AppModule]
+    });
     service = TestBed.inject(OrderApiService);
   });
 
