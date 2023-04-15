@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefaultButtonComponent } from './default-button.component';
+import { InputContainerComponent } from './input-container.component';
 
-describe('DefaultButtonComponent', () => {
-  let component: DefaultButtonComponent;
-  let fixture: ComponentFixture<DefaultButtonComponent>;
+describe('InputContainerComponent', () => {
+  let component: InputContainerComponent;
+  let fixture: ComponentFixture<InputContainerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DefaultButtonComponent ]
+      declarations: [  ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DefaultButtonComponent);
+    fixture = TestBed.createComponent(InputContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

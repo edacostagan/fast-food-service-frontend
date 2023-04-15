@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 import { CartService } from '../../../../infrastructure/services/cart.service';
@@ -10,16 +10,12 @@ import { CartItemEntity } from '../../../../domain/models/entities/cart-item.ent
   templateUrl: './cart-page.component.html',
   styleUrls: ['./cart-page.component.css']
 })
-export class CartPageComponent implements OnInit {
+export class CartPageComponent  {
 
   order!: CartEntity;
 
   constructor(private orderService: CartService){
     this.orderService.getCartObservable().subscribe((order) => this.order = order)
-  }
-
-  ngOnInit(): void {
-
   }
 
   removeFromOrder(orderItem: CartItemEntity){

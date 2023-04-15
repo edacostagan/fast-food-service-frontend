@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TextInputComponent } from './text-input.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('TextInputComponent', () => {
   let component: TextInputComponent;
@@ -8,13 +9,13 @@ describe('TextInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TextInputComponent ]
+      declarations:[ TextInputComponent ],
+      imports: [ AppModule ]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(TextInputComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

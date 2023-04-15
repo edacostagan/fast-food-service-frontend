@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../../../../infrastructure/services/cart.service';
 import { UserEntity } from '../../../../domain/models/entities/user.entity';
 import { UserApiService } from '../../../../infrastructure/services/user.service';
@@ -8,7 +8,7 @@ import { UserApiService } from '../../../../infrastructure/services/user.service
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   orderCount: number = 0;
   user! :UserEntity;
@@ -23,10 +23,7 @@ export class HeaderComponent implements OnInit {
       this.user = newUser;
 
     })
-
   }
-  ngOnInit(): void { }
-
 
   logout(){
     this.userService.userLogout();

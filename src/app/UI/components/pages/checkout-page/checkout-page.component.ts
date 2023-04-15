@@ -43,8 +43,6 @@ export class CheckoutPageComponent implements OnInit {
 
     this.cart = this.cartService.getCart();
     this.user = this.userService.currentUser;
-
-
   }
 
   ngOnInit(): void {
@@ -87,7 +85,7 @@ export class CheckoutPageComponent implements OnInit {
     this.order.recipientName = this.fc['userFullname'].value;
     this.order.recipientAddress = this.fc['userAddress'].value;
     this.order.paymentId = "642db3be64d9ae767132e5e5";
-    this.order.orderDetail = getOrderDetail(this.cart.items);
+    this.order.orderDetail = this.getOrderDetail(this.cart.items);
     this.order.orderPrice = this.cart.totalPrice;
 
     this.orderService.createOrder(this.order)
@@ -100,35 +98,34 @@ export class CheckoutPageComponent implements OnInit {
             `Congratulations! Your order # ${res} has been received!`,
             'Order Complete!');
 
-
           this.router.navigateByUrl('/payment');
-
         },
         error: (error) => {
 
           this.toastrService.error(
             `Sorry! Something got lost on the way to the kitchen!`,
             'Oops!');
-
-
         }
       })
   }
+
+  getOrderDetail(items: CartItemEntity[]): IOrderItem[] {
+
+    let details: IOrderItem[] = [];
+
+    items.forEach(element => {
+      let orderItem: IOrderItem = {
+        menuId: element.menu._id,
+        price: element.price,
+        quantity: element.quantity
+      }
+      details.push(orderItem);
+    });
+
+    return details;
+  }
+
+
 }
 
-function getOrderDetail(items: CartItemEntity[]): IOrderItem[] {
-
-  let details: IOrderItem[] = [];
-
-  items.forEach(element => {
-    let orderItem: IOrderItem = {
-      menuId: element.menu._id,
-      price: element.price,
-      quantity: element.quantity
-    }
-    details.push(orderItem);
-  });
-
-  return details;
-}
 

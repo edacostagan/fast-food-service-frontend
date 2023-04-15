@@ -30,7 +30,6 @@ export class PaymentPageComponent implements OnInit {
         next: ((res) => {
           this.orders = res;
 
-
         }),
         error: () => {
           this.toastrService.warning(

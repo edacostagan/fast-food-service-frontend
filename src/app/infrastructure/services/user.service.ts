@@ -30,9 +30,9 @@ export class UserApiService extends UserGateway {
   public userObservable!: Observable<UserEntity>;
 
   constructor(
-    private readonly http: HttpClient,
+    private http: HttpClient,
     private toastrService: ToastrService,
-    private readonly auth: Auth,
+    private auth: Auth,
   ) {
     super();
     this.userObservable = this.userBehaviourSubject.asObservable();

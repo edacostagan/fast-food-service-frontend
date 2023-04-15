@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
@@ -11,8 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent {
 
   menus: MenuEntity[] = [];
 
@@ -24,8 +23,6 @@ export class HomeComponent implements OnInit {
     menuObservable = menuService.getAllMenus();
 
     menuObservable.subscribe((menuItems) => this.menus = menuItems);
-
   }
 
-  ngOnInit(): void {  }
 }
