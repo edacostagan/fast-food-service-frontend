@@ -87,6 +87,7 @@ export class UserApiService extends UserGateway {
     localStorage.removeItem(environment.CART_KEY);
     localStorage.removeItem(environment.USER_KEY);
     window.location.reload();
+
   }
 
 

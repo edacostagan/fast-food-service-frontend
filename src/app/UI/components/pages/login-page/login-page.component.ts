@@ -26,6 +26,7 @@ export class LoginPageComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.loginForm = this.builder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -53,6 +54,7 @@ export class LoginPageComponent implements OnInit {
           userEmail: email,
           userPassword: password
         }).subscribe(() => {
+
           this.router.navigateByUrl(this.returnUrl);
         });
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { OrderGateway } from '../../domain/models/gateways/order.gateway';
 import { OrderEntity } from '../../domain/models/entities/order.entity';
@@ -16,7 +16,6 @@ export class OrderApiService implements OrderGateway {
   ) { }
 
 
-
   /**
    * Gets all the pending orders of an UserId
    *
@@ -30,7 +29,6 @@ export class OrderApiService implements OrderGateway {
 
   }
 
-
   /**
    * Sends the http request to API for the creation of a new order
    * It sends the order data to back to be stored in DB
@@ -42,8 +40,26 @@ export class OrderApiService implements OrderGateway {
   createOrder(newOrder: OrderEntity): Observable<string> {
 
     return this.http.post<string>(`${environment.API_BASE_URL}/order/create/`, newOrder)
+  }
 
 
+  /**
+   * Allows to change the status of the selected order
+   * it receives the number of the new status (see OrderStatusEnum)
+   * return True if the process is succesfull or error if not
+   *
+   * Uses Patch method, but it can be changed for Put or even Post method
+   *
+   * @param {string} orderId
+   * @param {number} newStatus
+   * @return {*}  {Observable<boolean>}
+   * @memberof OrderApiService
+   */
+  changeOrderStatus(orderId: string, newStatus: number): Observable<boolean> {
+
+    const uri: string =  `${environment.API_BASE_URL}/order/update/${orderId}/${newStatus}`;
+
+    return this.http.patch<boolean>(uri,null)
   }
 
 }

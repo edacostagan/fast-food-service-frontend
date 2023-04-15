@@ -3,7 +3,13 @@
 
     <app-title title="Order Summary"></app-title>
     <hr>
-    <div class="summary">
+
+    <app-not-found [visible]="!orders || !orders.length" notFoundMessage="You do not have any pending Order yet!"
+      resetLinkText="Make a new one! Back to Menu Options..">
+    </app-not-found>
+
+
+    <div class="summary" *ngIf="orders && orders.length">
       <div>
         <h4>User:
           {{user.userFullname}}
@@ -14,56 +20,63 @@
           {{user.userAddress}}
         </h5>
       </div>
-    </div>
-    <hr>
-    <div *ngIf="orders && orders.length">
-      <h3>Orders: </h3>
-      <ul>
-        <li *ngFor="let order of orders">
-          <div class="card" style="width: 50rem;">
-            <div class="card-header">
-              Order ID:
-              {{order._id}}
-            </div>
-            <h5 class="card-title">
-              Order Date:
-              {{order.orderDate | date}}
-            </h5>
-            <div>
-              Order Total Items:
-              <ol *ngFor="let detail of order.orderDetail">
-                Menu: {{detail.menuId}}
-                Quantity: {{detail.quantity}}
-                Unit Price: {{detail.price | currency}}
-              </ol>
-            </div>
-            <div>
-              Order Total Price:
-              {{order.orderPrice | currency}}
-            </div>
-            <div>
-              Order Status:
-              {{getOrderStatusLabel(order.orderStatus)}}
-              <div class="btn-group-lg">
-                <button *ngIf="order.orderStatus === 10" (click)="payOrder(order._id)"
-                  class="btn btn-outline-warning m-1">
-                  Pay Order
-                </button>
-                <button *ngIf="order.orderStatus <= 20" (click)="cancelOrder(order._id)"
-                  class="btn btn-outline-danger m-1">
-                  Cancel Order
-                </button>
+      <hr>
+      <div>
+        <h3>Orders: </h3>
+        <ul>
+          <li *ngFor="let order of orders">
+            <div class="card bg-light border-dark">
+              <div class="card-header">
+                Order ID:
+                {{order._id}}
+              </div>
+              <h5 class="card-title m-auto">
+                Order Date:
+                {{order.orderDate | date}}
+              </h5>
 
-                <button *ngIf="order.orderStatus === 30" (click)="markAsDelivered(order._id)"
-                  class="btn btn-outline-success m-1">
-                  Mark as Received!
-                </button>
+              <div class="card-body">
+                <label class="form-label fw-bold">
+                  Order Total Items:
+                </label>
+                <ol *ngFor="let detail of order.orderDetail">
+                  Menu: {{detail.menuId}}
+                  Quantity: {{detail.quantity}}
+                  Unit Price: {{detail.price | currency}}
+                </ol>
+                <div>
+                  <label class="form-label fw-bold">
+                    Order Total Price:
+                  </label>
+                  {{order.orderPrice | currency}}
+                </div>
+                <div>
+                  <label class="form-label fw-bold">
+                    Order Status:
+                  </label>
+                  {{getOrderStatusLabel(order.orderStatus)}}
+                  <div class="btn-group-lg">
+                    <button *ngIf="order.orderStatus === 10" (click)="payOrder(order._id)"
+                      class="btn btn-outline-warning m-1">
+                      Pay Order
+                    </button>
+                    <button *ngIf="order.orderStatus <= 20" (click)="cancelOrder(order._id)"
+                      class="btn btn-outline-danger m-1">
+                      Cancel Order
+                    </button>
+
+                    <button *ngIf="order.orderStatus === 30" (click)="markAsReceived(order._id)"
+                      class="btn btn-outline-success m-1">
+                      Mark as Received!
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <hr>
-        </li>
-      </ul>
+            <hr>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

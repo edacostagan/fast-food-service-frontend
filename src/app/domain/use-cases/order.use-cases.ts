@@ -22,4 +22,8 @@ export class OrderUseCases {
     return this.orderGateway.getOrdersOfUser(userId);
   }
 
+  changeOrderStatus(orderId: string, newStatus: number): Observable<boolean>{
+    return this.orderGateway.changeOrderStatus(orderId,newStatus);
+  }
+
 }

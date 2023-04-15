@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OrderEntity, OrderStatusEnum } from '../../../../domain/models/entities/order.entity';
 import { UserEntity } from '../../../../domain/models/entities/user.entity';
@@ -15,51 +15,138 @@ export class PaymentPageComponent implements OnInit {
 
   orders: OrderEntity[] = [];
   public user!: UserEntity;
+  returnUrl = '';
 
   constructor(
     private orderService: OrderApiService,
     private userService: UserApiService,
     private toastrService: ToastrService,
-    router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
 
-    this.user = userService.currentUser;
+  }
+  ngOnInit(): void {
 
-    orderService.getOrdersOfUser(userService.currentUser._id)
+    this.user = this.userService.currentUser;
+    this.getAllUserOrders();
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
+  }
+
+  /**
+   * Retrieves from DB all the pending orders of the user
+   * If there is no orders display a NotFound Page
+   * If there is any error displays an popup alert message
+   *
+   * @memberof PaymentPageComponent
+   */
+  getAllUserOrders() {
+    this.orderService.getOrdersOfUser(this.userService.currentUser._id)
       .subscribe({
         next: ((res) => {
-          this.orders = res;
+          this.orders = res.reverse();
 
+          //this.orders.reverse();
         }),
         error: () => {
           this.toastrService.warning(
             `It seems that the Lemmings are busy right now!`,
             'Something does not work in the back!');
-
         }
       })
   }
 
-  ngOnInit(): void {
+  /**
+   * Starts the process of payment for the pending order selected
+   *
+   * @param {string} orderId
+   * @memberof PaymentPageComponent
+   */
+  payOrder(orderId: string) {
 
+    const newStatus = 30; //InProcess
+    this.orderService.changeOrderStatus(orderId,newStatus)
+    .subscribe({
+      next: ((res) => {
+        this.toastrService.success(
+          `Order succesfully paid!`,
+          'Going back to work boys!');
+          this.getAllUserOrders();
+
+          //this.router.navigateByUrl(this.returnUrl);
+      }),
+      error: () => {
+        this.toastrService.warning(
+          `It seems that the Lemmings are busy right now!`,
+          'Something does not work in the back!');
+      }
+    })
   }
 
-  payOrder(orderId: string){
 
-    alert(`Do Payment Proccess for order # ${orderId}`)
+
+  /**
+   * Allows to Cancel the selected order
+   * return True if the process is succesful
+   *
+   * @param {string} orderId
+   * @memberof PaymentPageComponent
+   */
+  cancelOrder(orderId: string) {
+
+    const cancelStatus = 50; //Canceled
+    this.orderService.changeOrderStatus(orderId,cancelStatus)
+    .subscribe({
+      next: ((res) => {
+        this.toastrService.success(
+          `Order has been Canceled!`
+          );
+
+          this.getAllUserOrders();
+      }),
+      error: () => {
+        this.toastrService.warning(
+          `It seems that the Lemmings are busy right now!`,
+          'Something does not work in the back!');
+      }
+    })
   }
 
-  cancelOrder(orderId: string){
+  /**
+   * Allows to change the status of the selected order and mark it as completed
+   * shows a message if the process is succesful
+   *
+   * @param {string} orderId
+   * @memberof PaymentPageComponent
+   */
+  markAsReceived(orderId: string) {
 
-    alert(`Do Cancel Proccess for order # ${orderId}`)
+    const cancelStatus = 40; //COMPLETED
+    this.orderService.changeOrderStatus(orderId,cancelStatus)
+    .subscribe({
+      next: ((res) => {
+        this.toastrService.success(
+          `Order has been Delivered!`,
+          'Enjoy Compadre!');
+      }),
+      error: () => {
+        this.toastrService.warning(
+          `It seems that the Lemmings are busy right now!`,
+          'Something does not work in the back!');
+      }
+    })
   }
 
-  markAsDelivered(orderId: string){
 
-    alert(`Do Delivered Proccess for order # ${orderId}`)
-  }
-
-  getOrderStatusLabel(orderStatus: number): string{
+  /**
+   * Receives the number code of the OrderStatus and
+   * returns the name(key) of the OrderStatus
+   *
+   * @param {number} orderStatus
+   * @return {*}  {string}
+   * @memberof PaymentPageComponent
+   */
+  getOrderStatusLabel(orderStatus: number): string {
 
     return Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(orderStatus)];
   }

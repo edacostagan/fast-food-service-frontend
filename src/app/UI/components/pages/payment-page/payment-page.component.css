@@ -7,7 +7,7 @@
 }
 
 .content{
-  width: 50rem;
+  width: 35rem;
   margin-right: 3rem;
   display: flex;
   flex-direction: column;
@@ -16,25 +16,4 @@
 .summary > div{
   display: flex;
   margin-top: 0.7rem;
-}
-
-.summary h4{
-  margin: 0 1rem 0 0;
-  flex-basis: 50rem;
-}
-.summary h5{
-  margin: 0 1rem 0 0;
-  flex-basis: 50rem;
-}
-
-
-.buttons-container{
-  flex-basis: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.buttons{
-  margin: 2rem;
-  width: 35rem;
 }
