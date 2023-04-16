@@ -1,6 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { AuthGuard } from "./auth.guard";
 import { AppModule } from "../../app.module";
+import { HttpClient } from '@angular/common/http';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
@@ -10,6 +11,7 @@ describe('AuthGuard', () => {
       declarations:[],
       imports:[AppModule]
     });
+
     guard = TestBed.inject(AuthGuard);
   });
 

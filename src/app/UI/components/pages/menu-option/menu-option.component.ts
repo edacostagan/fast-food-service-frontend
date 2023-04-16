@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, map, tap } from 'rxjs';
 import { MenuEntity } from 'src/app/domain/models/entities/menu.entity';
 import { IMenuRegister } from 'src/app/domain/models/interfaces/menu.interfaces';
 import { MenuApiService } from 'src/app/infrastructure/services/menu.service';

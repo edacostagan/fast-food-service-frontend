@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginPageComponent } from './login-page.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { AppModule } from '../../../../app.module';
 
 describe('LoginPageComponent', () => {

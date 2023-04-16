@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { UserGateway } from '../../domain/models/gateways/user.gateway';
 import { UserEntity } from '../../domain/models/entities/user.entity';
 import { IUserLogin, IUserRegister, IUserUpdate } from '../../domain/models/interfaces/user.interfaces';
+import { Router } from '@angular/router';
 
 /**
  * Class UserApiService provides a service for managing user authentication and session management for the APP.
@@ -29,6 +30,7 @@ export class UserApiService extends UserGateway {
     private http: HttpClient,
     private toastrService: ToastrService,
     private auth: Auth,
+    private router: Router
   ) {
     super();
     this.userObservable = this.userBehaviourSubject.asObservable();
@@ -45,6 +47,18 @@ export class UserApiService extends UserGateway {
     return this.userBehaviourSubject.value;
   }
 
+
+  /**
+   * Allows to update the current User data
+   * handled by the userBehaviourSubject
+   *
+   * @param {UserEntity} user
+   * @memberof UserApiService
+   */
+  setCurrentUser(user: UserEntity) {
+    this.userBehaviourSubject.next(user);
+  }
+
   /**
    * Allows the user to login to the APP
    *
@@ -57,7 +71,6 @@ export class UserApiService extends UserGateway {
       .pipe(
         tap({
           next: (user) => {
-
             this.setUserToLocalStorage(user);
             this.userBehaviourSubject.next(user);
 
@@ -89,17 +102,14 @@ export class UserApiService extends UserGateway {
     let actualToken = this.getUserFromLocalStorage().token;
 
     return this.http.patch<UserEntity>((`${environment.API_BASE_URL}/user/update/${userId}`), updatedUser)
-    .pipe(
-      map( (res: UserEntity) => {
-        const tempUser = res;
-        tempUser.token = actualToken;
-        this.setUserToLocalStorage(tempUser);
-        return tempUser;
-      })
-    )
-
-
-
+      .pipe(
+        map((res: UserEntity) => {
+          const tempUser = res;
+          tempUser.token = actualToken;
+          this.setUserToLocalStorage(tempUser);
+          return tempUser;
+        })
+      )
   }
 
 
@@ -110,11 +120,11 @@ export class UserApiService extends UserGateway {
    * @memberof UserApiService
    */
   userLogout() {
-    this.userBehaviourSubject.next(new UserEntity());
+    this.setCurrentUser(new UserEntity());
     localStorage.removeItem(environment.CART_KEY);
     localStorage.removeItem(environment.USER_KEY);
-    window.location.reload();
 
+    this.router.navigateByUrl('/menu');
   }
 
 

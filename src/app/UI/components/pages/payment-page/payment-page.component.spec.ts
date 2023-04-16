@@ -5,8 +5,9 @@ import { OrderStatusEnum } from 'src/app/domain/models/entities/order.entity';
 import { AppModule } from 'src/app/app.module';
 
 describe('PaymentPageComponent', () => {
-  let component: PaymentPageComponent;
+  let paymenPageComponent: PaymentPageComponent;
   let fixture: ComponentFixture<PaymentPageComponent>;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,12 +17,12 @@ describe('PaymentPageComponent', () => {
       .compileComponents();
 
     fixture = TestBed.createComponent(PaymentPageComponent);
-    component = fixture.componentInstance;
+    paymenPageComponent = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(paymenPageComponent).toBeTruthy();
   });
 
   it('should return the correct OrderStatus Label', () => {
@@ -30,7 +31,7 @@ describe('PaymentPageComponent', () => {
     const expectedResult= Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(orderStatus)];
 
     //Act
-    const result = component.getOrderStatusLabel(orderStatus);
+    const result = paymenPageComponent.getOrderStatusLabel(orderStatus);
     //Assert
 
     expect(result).toEqual(expectedResult);

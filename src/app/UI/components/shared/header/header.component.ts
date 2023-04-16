@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../../../infrastructure/services/cart.service';
 import { UserEntity } from '../../../../domain/models/entities/user.entity';
 import { UserApiService } from '../../../../infrastructure/services/user.service';
@@ -17,23 +17,23 @@ import { UserApiService } from '../../../../infrastructure/services/user.service
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
   orderCount: number = 0;
   user!: UserEntity;
 
   constructor(
     private readonly orderService: CartService,
-    private readonly userService: UserApiService,
-  ) {
-    orderService.getCartObservable().subscribe((newOrder) => this.orderCount = newOrder.itemsCount)
+    private readonly userService: UserApiService  ) {  }
 
-    userService.userObservable.subscribe((newUser) => {
+
+  ngOnInit(): void {
+    this.orderService.getCartObservable().subscribe((newOrder) => this.orderCount = newOrder.itemsCount)
+
+    this.userService.userObservable.subscribe((newUser) => {
       this.user = newUser;
-
     })
   }
-
 
   /**
    * calls the logout process for the current user
@@ -53,9 +53,7 @@ export class HeaderComponent {
   get isAdmin() {
 
     return this.user.userIsAdmin;
-
   }
-
 
   /**
    * Returns the token associated with the current user

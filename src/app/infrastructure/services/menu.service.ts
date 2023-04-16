@@ -34,9 +34,6 @@ export class MenuApiService extends MenuGateway {
   ){
     super();
   }
-
-
-
   /**
    * retrieves all the menu options available in DB
    *
@@ -48,8 +45,6 @@ export class MenuApiService extends MenuGateway {
     return this.http.get<MenuEntity[]>(`${environment.API_BASE_URL}/menu/`);
 
   }
-
-
   /**
    * retrieves the menu information for the given menuId
    *
@@ -62,8 +57,6 @@ export class MenuApiService extends MenuGateway {
     return this.http.get<MenuEntity>(`${environment.API_BASE_URL}/menu/${menuId}`);
 
   }
-
-
   /**
    * Adds a new Menu option
    *

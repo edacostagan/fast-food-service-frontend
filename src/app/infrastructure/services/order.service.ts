@@ -15,8 +15,6 @@ export class OrderApiService implements OrderGateway {
     private http: HttpClient
   ) { }
 
-
-
   /**
    * Gets all the pending orders of an UserId
    *

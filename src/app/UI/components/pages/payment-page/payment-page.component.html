@@ -56,16 +56,16 @@
                   </label>
                   {{getOrderStatusLabel(order.orderStatus)}}
                   <div class="btn-group-lg">
-                    <button *ngIf="order.orderStatus === 10" (click)="payOrder(order._id)"
+                    <button *ngIf="order.orderStatus === 10" (click)="updateOrderStatus(order._id, 30)"
                       class="btn btn-outline-warning m-1">
                       Pay Order
                     </button>
-                    <button *ngIf="order.orderStatus <= 20" (click)="cancelOrder(order._id)"
+                    <button *ngIf="order.orderStatus <= 20" (click)="updateOrderStatus(order._id, 50)"
                       class="btn btn-outline-danger m-1">
                       Cancel Order
                     </button>
 
-                    <button *ngIf="order.orderStatus === 30" (click)="markAsReceived(order._id)"
+                    <button *ngIf="order.orderStatus === 30" (click)="updateOrderStatus(order._id, 40)"
                       class="btn btn-outline-success m-1">
                       Mark as Received!
                     </button>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { OrderEntity, OrderStatusEnum } from '../../../../domain/models/entities/order.entity';
+import { OrderEntity } from '../../../../domain/models/entities/order.entity';
 import { UserEntity } from '../../../../domain/models/entities/user.entity';
 import { OrderApiService } from '../../../../infrastructure/services/order.service';
 import { UserApiService } from '../../../../infrastructure/services/user.service';
@@ -42,7 +42,6 @@ export class PaymentPageComponent implements OnInit {
     this.orderService.getOrdersOfUser(this.userService.currentUser._id)
       .subscribe({
         next: ((res) => {
-
           this.orders = res.reverse();
         }),
         error: () => {
@@ -53,90 +52,54 @@ export class PaymentPageComponent implements OnInit {
       })
   }
 
-  /**
-   * Starts the process of payment for the pending order selected
-   *
-   * @param {string} orderId
-   * @memberof PaymentPageComponent
-   */
-  payOrder(orderId: string) {
-
-    const newStatus = 30; //InProcess
-    this.orderService.changeOrderStatus(orderId,newStatus)
-    .subscribe({
-      next: ((res) => {
-        this.toastrService.success(
-          `Order succesfully paid!`,
-          'Going back to work boys!');
-
-          this.getAllUserOrders();
-
-      }),
-      error: () => {
-        this.toastrService.warning(
-          `It seems that the Lemmings are busy right now!`,
-          'Something does not work in the back!');
-      }
-    })
-  }
-
-
 
   /**
-   * Allows to Cancel the selected order
-   * return True if the process is succesful
+   * handles all the order status changes
    *
    * @param {string} orderId
+   * @param {number} newStatus
    * @memberof PaymentPageComponent
    */
-  cancelOrder(orderId: string) {
+  updateOrderStatus(orderId: string, newStatus: number): void {
 
-    const cancelStatus = 50; //Canceled
-    this.orderService.changeOrderStatus(orderId,cancelStatus)
-    .subscribe({
-      next: ((res) => {
-        this.toastrService.success(
-          `Order has been Canceled!`
-          );
+    let title: string = '';
+    let comment: string = '';
+
+    switch (newStatus) {
+      case 30: {
+        title = 'Order succesfully paid!';
+        comment = 'Going back to work boys!';
+        break;
+      }
+      case 40: {
+        title = `Order has been Delivered!`;
+        comment = 'Enjoy Compadre!';
+        break;
+      }
+      case 50: {
+        title = `Order has been Canceled!`;
+        comment = 'sorry to see you go... but.. do not get hungry!';
+        break;
+      }
+    }
+
+
+    this.orderService.changeOrderStatus(orderId, newStatus)
+      .subscribe({
+        next: ((res) => {
+          this.toastrService.success(
+            title,
+            comment);
 
           this.getAllUserOrders();
-      }),
-      error: () => {
-        this.toastrService.warning(
-          `It seems that the Lemmings are busy right now!`,
-          'Something does not work in the back!');
-      }
-    })
+        }),
+        error: () => {
+          this.toastrService.warning(
+            `It seems that the Lemmings are busy right now!`,
+            'Something does not work in the back!');
+        }
+      })
   }
-
-  /**
-   * Allows to change the status of the selected order and mark it as completed
-   * shows a message if the process is succesful
-   *
-   * @param {string} orderId
-   * @memberof PaymentPageComponent
-   */
-  markAsReceived(orderId: string) {
-
-    const cancelStatus = 40; //COMPLETED
-    this.orderService.changeOrderStatus(orderId,cancelStatus)
-    .subscribe({
-      next: ((res) => {
-        this.toastrService.success(
-          `Order has been Delivered!`,
-          'Enjoy Compadre!');
-
-          this.getAllUserOrders();
-      }),
-      error: () => {
-        this.toastrService.warning(
-          `It seems that the Lemmings are busy right now!`,
-          'Something does not work in the back!');
-      }
-    })
-  }
-
-
 
   /**
    * returns the correct order status key (name)
@@ -145,7 +108,7 @@ export class PaymentPageComponent implements OnInit {
    * @return {*}
    * @memberof PendingsComponent
    */
-  getOrderStatusLabel(orderStatus: number){
+  getOrderStatusLabel(orderStatus: number) {
     return this.orderService.getOrderStatusKey(orderStatus);
   }
 
