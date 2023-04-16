@@ -1,10 +1,10 @@
 import { TestBed } from "@angular/core/testing";
-import { AuthGuard } from "./auth.guard";
 import { AppModule } from "../../app.module";
 import { UserApiService } from "../services/user.service";
+import { AdminGuard } from './admin.guard';
 
-describe('AuthGuard', () => {
-  let guard: AuthGuard;
+describe('AdminGuard', () => {
+  let guard: AdminGuard;
   let userService: UserApiService;
   let router: any;
 
@@ -14,7 +14,7 @@ describe('AuthGuard', () => {
       imports:[AppModule]
     });
 
-    guard = TestBed.inject(AuthGuard);
+    guard = TestBed.inject(AdminGuard);
   });
 
   it('should be created', () => {

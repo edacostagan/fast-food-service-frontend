@@ -1,21 +1,17 @@
-import { TestBed } from '@angular/core/testing';
 
 import { UserApiService } from './user.service';
-import { AppModule } from '../../../app/app.module';
 import { UserEntity } from 'src/app/domain/models/entities/user.entity';
 import { IUserLogin } from 'src/app/domain/models/interfaces/user.interfaces';
 import { of } from 'rxjs';
-import { Auth } from '@firebase/auth';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { IUserRegister } from 'src/app/domain/models/interfaces/user.interfaces';
+
 
 describe('UserService', () => {
-  let userHttpService: UserApiService;
-  let userLocalService: UserApiService;
-  let HttpClientSpy: { post: jasmine.Spy };
-  let auth: Auth;
-  let router: Router;
-  let toastrService: ToastrService;
+  let userService: UserApiService;
+  let auth: any;
+  let router: any;
+  let toastrService: any;
+  let httpClientSpy: { post: jasmine.Spy };
 
   //Arrange
   let userData: UserEntity = {
@@ -29,28 +25,27 @@ describe('UserService', () => {
   }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AppModule]
-    });
 
-    HttpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'get']);
+    toastrService = jasmine.createSpyObj('ToastrService', ['success', 'error']);
 
-    userHttpService = new UserApiService(HttpClientSpy as any, auth as any, router as any, toastrService as any);
-    userLocalService = TestBed.inject(UserApiService);
+    userService = new UserApiService(httpClientSpy as any, auth as any, router as any, toastrService as any);
+
   });
 
   it('should be created', () => {
-    expect(userHttpService).toBeTruthy();
+    expect(userService).toBeTruthy();
   });
 
   it('should return the current user data', () => {
     //Arrange
-    const result = userLocalService.currentUser;
+    const result: UserEntity = userService.currentUser;
     //Act
-    userLocalService.setCurrentUser(userData);
+    userService.setCurrentUser(userData);
     //Assert
     expect(result).toEqual(userData);
-  })
+    expect(result).toBeInstanceOf(UserEntity)
+  });
 
   it('should return User data if the login is correct', (done: DoneFn) => {
     //Arrange
@@ -60,14 +55,38 @@ describe('UserService', () => {
     }
     const returnValue: UserEntity = userData;
 
-    HttpClientSpy.post.and.returnValue(of(returnValue));
+    httpClientSpy.post.and.returnValue(of(returnValue));
+    toastrService.success();
 
     //Act
-    userHttpService.userLogin(mockCredentials).subscribe((result) => {
+    userService.userLogin(mockCredentials).subscribe((result) => {
       //Assert
       expect(result).toEqual(userData);
       done();
     })
-  })
+  });
+
+  it('should register a new user and return the data stored', (done) => {
+    //Arrange
+    const newUser: IUserRegister = {
+      ...userData,
+      userPassword: '123456',
+      confirmPassword: '123456'
+    }
+    const expectedResult: UserEntity = userData;
+
+    httpClientSpy.post.and.returnValue(of(expectedResult));
+    //Act
+
+    userService.registerUser(newUser).subscribe((result)=>{
+      expect(result).toEqual(expectedResult)
+      done();
+    })
+
+
+    //Assert
+
+  });
+
 
 });

@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CartService {
 
-  private cart: CartEntity = this.getCartFromLocalStorage();
+  cart: CartEntity = this.getCartFromLocalStorage();
   private readonly cartBehaviourSubject: BehaviorSubject<CartEntity> = new BehaviorSubject(this.cart);
 
   constructor() { }
@@ -53,7 +53,7 @@ export class CartService {
   }
 
 
-  private setCartToLocalStorage(): void {
+  setCartToLocalStorage(): void {
     this.cart.totalPrice = this.cart.items.reduce((prevSum, currentItem) => prevSum + currentItem.price, 0);
     this.cart.itemsCount = this.cart.items.reduce((prevSum, currentItem) => prevSum + currentItem.quantity, 0);
 

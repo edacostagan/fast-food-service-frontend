@@ -66,7 +66,7 @@ export class PaymentPageComponent implements OnInit {
     let comment: string = '';
 
     switch (newStatus) {
-      case 30: {
+      case 20: {
         title = 'Order succesfully paid!';
         comment = 'Going back to work boys!';
         break;

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { MenuEntity } from '../../domain/models/entities/menu.entity';
 import { MenuGateway } from '../../../app/domain/models/gateways/menu.gateway';
-import { IMenuRegister } from 'src/app/domain/models/interfaces/menu.interfaces';
+import { IMenuRegister } from '../../../app/domain/models/interfaces/menu.interfaces';
 
 
 
@@ -22,8 +22,6 @@ import { IMenuRegister } from 'src/app/domain/models/interfaces/menu.interfaces'
   providedIn: 'root'
 })
 export class MenuApiService extends MenuGateway {
-
-
   /**
    * Creates an instance of MenuApiService.
    * @param {HttpClient} http
@@ -53,9 +51,7 @@ export class MenuApiService extends MenuGateway {
    * @memberof MenuApiService
    */
   getMenuById(menuId: string): Observable<MenuEntity> {
-
     return this.http.get<MenuEntity>(`${environment.API_BASE_URL}/menu/${menuId}`);
-
   }
   /**
    * Adds a new Menu option

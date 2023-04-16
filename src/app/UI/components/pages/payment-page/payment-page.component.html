@@ -54,9 +54,12 @@
                   <label class="form-label fw-bold">
                     Order Status:
                   </label>
-                  {{getOrderStatusLabel(order.orderStatus)}}
+                 <!--  {{getOrderStatusLabel(order.orderStatus)}} -->
+
+                  {{order.orderStatus | orderStatusName}}
+
                   <div class="btn-group-lg">
-                    <button *ngIf="order.orderStatus === 10" (click)="updateOrderStatus(order._id, 30)"
+                    <button *ngIf="order.orderStatus === 10" (click)="updateOrderStatus(order._id, 20)"
                       class="btn btn-outline-warning m-1">
                       Pay Order
                     </button>

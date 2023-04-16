@@ -53,12 +53,14 @@ export class LoginPageComponent implements OnInit {
         this.userService.userLogin({
           userEmail: email,
           userPassword: password
-        }).subscribe(() => {
+        }).subscribe((response) => {
+
+          this.toastrService.success(
+            `Welcome to Fast Food Service ${response.userFullname}!`,
+            'Login Successful'),
 
           this.router.navigateByUrl(this.returnUrl);
-
         });
-
       })
       .catch(error => {
         this.toastrService.error(

@@ -19,15 +19,14 @@ import { OrderApiService } from './infrastructure/services/order.service';
 import { AuthInterceptor } from './infrastructure/interceptors/auth.interceptor';
 import { LoadingInterceptor } from './infrastructure/interceptors/loading.interceptor';
 import { ComponentsModule } from './UI/components/components.module';
-import { ManagementComponent } from './UI/components/pages/management/management.component';
-import { ComponentsComponent } from './UI/components/components.component';
 import { ManagementModule } from './UI/components/pages/management/management.module';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -49,7 +48,7 @@ import { ManagementModule } from './UI/components/pages/management/management.mo
     { provide: UserGateway, useClass: UserApiService },
     { provide: OrderGateway, useClass: OrderApiService },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 
   ],
   bootstrap: [AppComponent]

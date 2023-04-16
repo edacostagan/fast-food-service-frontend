@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { OrderEntity } from 'src/app/domain/models/entities/order.entity';
-import { OrderApiService } from 'src/app/infrastructure/services/order.service';
-import { OrderStatusEnum } from '../../../../domain/models/entities/order.entity';
+import { OrderEntity } from '../../../../domain/models/entities/order.entity';
+import { OrderApiService } from '../../../../infrastructure/services/order.service';
 
 @Component({
   selector: 'app-pendings',
@@ -17,7 +16,6 @@ export class PendingsComponent implements OnInit {
   constructor(
     private orderService: OrderApiService,
     private toastrService: ToastrService,
-
   ) { }
 
   ngOnInit(): void {
@@ -80,7 +78,9 @@ export class PendingsComponent implements OnInit {
    * @memberof PendingsComponent
    */
   getOrderStatusLabel(orderStatus: number){
+
     return this.orderService.getOrderStatusKey(orderStatus);
+
   }
 
 

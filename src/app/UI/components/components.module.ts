@@ -26,46 +26,47 @@ import { LoadingComponent } from './shared/loading/loading.component';
 import { PendingsComponent } from './pages/pendings/pendings.component';
 import { MenuOptionComponent } from './pages/menu-option/menu-option.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { OrderStatusNamePipe } from "../../infrastructure/pipes/order-status.pipe";
 
 
 @NgModule({
-  declarations: [
-    ComponentsComponent,
-    HeaderComponent,
-    LoadingComponent,
-    HomeComponent,
-    TitleComponent,
-    NotFoundComponent,
-    InputContainerComponent,
-    InputValidationComponent,
-    TextInputComponent,
-    DefaultButtonComponent,
-    OrderItemsListComponent,
-    MenuPageComponent,
-    CartPageComponent,
-    LoginPageComponent,
-    RegisterPageComponent,
-    CheckoutPageComponent,
-    PaymentPageComponent,
-    PendingsComponent,
-    MenuOptionComponent,
-    ProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    HttpClientModule,
-    ComponentsRoutingModule
-  ],
-  exports:[
-    HomeComponent,
-    RouterModule,
-    HttpClientModule,
-    LoadingComponent,
-    HeaderComponent
-
-  ]
+    declarations: [
+        ComponentsComponent,
+        HeaderComponent,
+        LoadingComponent,
+        HomeComponent,
+        TitleComponent,
+        NotFoundComponent,
+        InputContainerComponent,
+        InputValidationComponent,
+        TextInputComponent,
+        DefaultButtonComponent,
+        OrderItemsListComponent,
+        MenuPageComponent,
+        CartPageComponent,
+        LoginPageComponent,
+        RegisterPageComponent,
+        CheckoutPageComponent,
+        PaymentPageComponent,
+        PendingsComponent,
+        MenuOptionComponent,
+        ProfileComponent
+    ],
+    exports: [
+        HomeComponent,
+        RouterModule,
+        HttpClientModule,
+        LoadingComponent,
+        HeaderComponent
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        HttpClientModule,
+        ComponentsRoutingModule,
+        OrderStatusNamePipe
+    ]
 })
 export class ComponentsModule { }

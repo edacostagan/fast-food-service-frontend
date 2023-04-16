@@ -3,10 +3,10 @@
   <div class="btn-group">
     <button class="btn btn-success m-2" (click)="getOrdersWithStatus(10)">Get Unpaid orders!</button>
     <button class="btn bg-warning m-2" (click)="getOrdersWithStatus(20)">Get orders Ready!</button>
-    <button class="btn btn-danger m-2"(click)="getOrdersWithStatus(30)">Get Shipped orders!</button>
-    <button class="btn btn-primary m-2"(click)="getOrdersWithStatus(40)">Get Completed orders!</button>
-    <button class="btn btn-dark m-2"(click)="getOrdersWithStatus(50)">Get Canceled orders!</button>
-    <button class="btn btn-secondary m-2"(click)="getOrdersWithStatus(60)">Get Refunded orders!</button>
+    <button class="btn btn-danger m-2" (click)="getOrdersWithStatus(30)">Get Shipped orders!</button>
+    <button class="btn btn-primary m-2" (click)="getOrdersWithStatus(40)">Get Completed orders!</button>
+    <button class="btn btn-dark m-2" (click)="getOrdersWithStatus(50)">Get Canceled orders!</button>
+    <button class="btn btn-secondary m-2" (click)="getOrdersWithStatus(60)">Get Refunded orders!</button>
   </div>
   <hr>
 
@@ -48,11 +48,14 @@
               <label class="form-label fw-bold">
                 Order Status:
               </label>
+
+              <!-- {{order.orderStatus | orderStatusName}} -->
+
               {{getOrderStatusLabel(order.orderStatus)}}
               <div class="btn-group-lg">
                 <button *ngIf="order.orderStatus === 20" (click)="changeOrderStatus(order._id, 30)"
                   class="btn btn-outline-warning m-1">
-                  Pay Order
+                  Send Order to Delivery
                 </button>
                 <button *ngIf="order.orderStatus < 40" (click)="changeOrderStatus(order._id, 50)"
                   class="btn btn-outline-danger m-1">

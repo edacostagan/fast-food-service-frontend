@@ -73,10 +73,6 @@ export class UserApiService extends UserGateway {
           next: (user) => {
             this.setUserToLocalStorage(user);
             this.userBehaviourSubject.next(user);
-
-            this.toastrService.success(
-              `Welcome to Fast Food Service ${user.userFullname}!`,
-              'Login Successful')
           },
           error: (errorResponse) => {
             this.toastrService.error(
@@ -142,12 +138,9 @@ export class UserApiService extends UserGateway {
           next: (user) => {
             this.setUserToLocalStorage(user);
             this.userBehaviourSubject.next(user);
-            this.toastrService.success(
-              `Welcome to Fast Food Service ${user.userFullname}!`,
-              'Register Successful')
           },
           error: (errorResponse) => {
-            this.toastrService.error(
+             this.toastrService.error(
               errorResponse.error,
               'Register Failed!')
           }
