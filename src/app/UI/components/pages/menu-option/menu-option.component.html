@@ -1,1 +1,24 @@
-<p>menu-option works!</p>
+<div class="container">
+  <div class="details">
+    <app-title title="New Menu"></app-title>
+
+    <form [formGroup]="newOptionForm" (ngSubmit)="submit()">
+
+      <text-input [control]="fc['menuName']" [showErrorsWhen]="isSubmitted" label="Menu Name">
+      </text-input>
+
+      <text-input [control]="fc['menuDescription']" [showErrorsWhen]="isSubmitted" label="Description">
+      </text-input>
+
+      <text-input [control]="fc['menuImageUrl']" [showErrorsWhen]="isSubmitted" label="Image Url">
+      </text-input>
+
+      <text-input [control]="fc['menuPrice']" [showErrorsWhen]="isSubmitted" label="Price">
+      </text-input>
+
+      <default-button text="Create Menu"></default-button>
+
+    </form>
+
+  </div>
+</div>

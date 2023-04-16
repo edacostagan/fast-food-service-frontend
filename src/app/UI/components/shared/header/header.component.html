@@ -7,9 +7,9 @@
           <a routerLink="/login">Login</a>
         </li>
         <li *ngIf="isAuth && isAdmin" class="menu-container">
-          <a routerLink="/admin">Admin Area</a>
+          <a routerLink="/management">Admin Area</a>
           <div class="menu">
-            <a routerLink="/pendings">Pending Orders</a>
+            <a routerLink="/pendings">Manage Orders</a>
             <a routerLink="/newMenu">Add Menu Option</a>
             <a (click)="logout()">Logout</a>
           </div>

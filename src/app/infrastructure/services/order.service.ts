@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
 import { OrderGateway } from '../../domain/models/gateways/order.gateway';
-import { OrderEntity } from '../../domain/models/entities/order.entity';
+import { OrderEntity, OrderStatusEnum } from '../../domain/models/entities/order.entity';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class OrderApiService implements OrderGateway {
   constructor(
     private http: HttpClient
   ) { }
+
 
 
   /**
@@ -62,4 +63,33 @@ export class OrderApiService implements OrderGateway {
     return this.http.patch<boolean>(uri,null)
   }
 
+
+  /**
+   * Retrieves all the orders that meet the criteria
+   * in this case that have the given status (see OrderStatusEnum)
+   *
+   * @param {number} status
+   * @return {*}  {Observable<OrderEntity[]>}
+   * @memberof OrderApiService
+   */
+  getAllOrdersByStatus(status: number): Observable<OrderEntity[]> {
+
+    const uri: string =  `${environment.API_BASE_URL}/order/status/${status}`;
+
+    return this.http.get<OrderEntity[]>(uri)
+  }
+
+
+  /**
+   * Receives the number code of the OrderStatus and
+   * returns the name(key) of the OrderStatus
+   *
+   * @param {number} orderStatus
+   * @return {*}  {string}
+   * @memberof PaymentPageComponent
+   */
+  getOrderStatusKey(orderStatus: number): string {
+
+    return Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(orderStatus)];
+  }
 }

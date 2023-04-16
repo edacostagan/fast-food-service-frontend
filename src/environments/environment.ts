@@ -18,6 +18,6 @@ export const environment = {
 }
 
 //"http://localhost:3000"
-//https://humorous-wrench-production.up.railway.app/
+//https://humorous-wrench-production.up.railway.app
 //SET CHROME_BIN='C:\Program Files\Google\Chrome\Application\chrome.exe'
 //dear-scarecrow-production.up.railway.app

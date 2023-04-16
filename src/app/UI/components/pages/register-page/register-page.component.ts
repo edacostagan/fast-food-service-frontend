@@ -50,6 +50,7 @@ export class RegisterPageComponent implements OnInit {
       userFullname: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       userAddress: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       userEmail: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
+      userMobilePhone: ['', [Validators.maxLength(12)]],
       userPassword: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       confirmPassword: ['', [Validators.required]]
     }, {
@@ -91,7 +92,8 @@ export class RegisterPageComponent implements OnInit {
       userEmail: fv.userEmail,
       userPassword: fv.userPassword,
       confirmPassword: fv.confirmPassword,
-      userIsAdmin: false
+      userIsAdmin: false,
+      userMobilePhone: fv.userMobilePhone
     }
 
     this.userService.registerWithFirebase(newUser.userEmail, newUser.userPassword)

@@ -1,1 +1,21 @@
-<p>profile works!</p>
+<div class="container">
+  <div class="details"></div>
+  <app-title title="User Profile"></app-title>
+  <hr>
+
+  <form [formGroup]="profileForm" (ngSubmit)="submit()">
+
+    <text-input [control]="fc['userFullname']" [showErrorsWhen]="isSubmitted" label="Full Name">
+    </text-input>
+
+    <text-input [control]="fc['userAddress']" [showErrorsWhen]="isSubmitted" label="Address">
+    </text-input>
+
+    <text-input [control]="fc['userMobilePhone']" [showErrorsWhen]="isSubmitted" label="Mobile Phone">
+    </text-input>
+
+    <default-button text="Update"></default-button>
+
+  </form>
+
+</div>

@@ -23,9 +23,7 @@ export class PaymentPageComponent implements OnInit {
     private toastrService: ToastrService,
     private readonly activatedRoute: ActivatedRoute,
     private router: Router,
-  ) {
-
-  }
+  ) { }
   ngOnInit(): void {
 
     this.user = this.userService.currentUser;
@@ -44,9 +42,8 @@ export class PaymentPageComponent implements OnInit {
     this.orderService.getOrdersOfUser(this.userService.currentUser._id)
       .subscribe({
         next: ((res) => {
-          this.orders = res.reverse();
 
-          //this.orders.reverse();
+          this.orders = res.reverse();
         }),
         error: () => {
           this.toastrService.warning(
@@ -140,18 +137,16 @@ export class PaymentPageComponent implements OnInit {
   }
 
 
+
   /**
-   * Receives the number code of the OrderStatus and
-   * returns the name(key) of the OrderStatus
+   * returns the correct order status key (name)
    *
    * @param {number} orderStatus
-   * @return {*}  {string}
-   * @memberof PaymentPageComponent
+   * @return {*}
+   * @memberof PendingsComponent
    */
-  getOrderStatusLabel(orderStatus: number): string {
-
-    return Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(orderStatus)];
+  getOrderStatusLabel(orderStatus: number){
+    return this.orderService.getOrderStatusKey(orderStatus);
   }
-
 
 }

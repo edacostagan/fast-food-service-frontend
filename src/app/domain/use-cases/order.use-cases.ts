@@ -26,4 +26,8 @@ export class OrderUseCases {
     return this.orderGateway.changeOrderStatus(orderId,newStatus);
   }
 
+  getAllOrdersByStatus(status: number): Observable<OrderEntity[]>{
+    return this.orderGateway.getAllOrdersByStatus(status);
+  }
+
 }

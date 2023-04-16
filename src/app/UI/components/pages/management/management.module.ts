@@ -4,8 +4,6 @@ import { ManagementComponent } from './management.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ManagementRoutingModule } from './management-routing.module';
-import { MenuOptionComponent } from '../menu-option/menu-option.component';
-import { PendingsComponent } from '../pendings/pendings.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -13,8 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     ManagementComponent,
-    //MenuOptionComponent,
-    //PendingsComponent
   ],
   imports: [
     CommonModule,
@@ -25,11 +21,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ManagementRoutingModule
   ],
   exports:[
-    /* PendingsComponent,
-    MenuOptionComponent,
-    RouterModule,
-    HttpClientModule */
-
 
   ]
 })

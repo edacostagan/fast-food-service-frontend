@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Auth, UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
@@ -7,10 +7,7 @@ import { Auth, UserCredential, createUserWithEmailAndPassword, signInWithEmailAn
 import { environment } from '../../../environments/environment';
 import { UserGateway } from '../../domain/models/gateways/user.gateway';
 import { UserEntity } from '../../domain/models/entities/user.entity';
-import { IUserLogin, IUserRegister } from '../../domain/models/interfaces/user.interfaces';
-
-
-
+import { IUserLogin, IUserRegister, IUserUpdate } from '../../domain/models/interfaces/user.interfaces';
 
 /**
  * Class UserApiService provides a service for managing user authentication and session management for the APP.
@@ -24,7 +21,6 @@ import { IUserLogin, IUserRegister } from '../../domain/models/interfaces/user.i
   providedIn: 'root'
 })
 export class UserApiService extends UserGateway {
-
 
   private userBehaviourSubject = new BehaviorSubject<UserEntity>(this.getUserFromLocalStorage());
   public userObservable!: Observable<UserEntity>;
@@ -56,13 +52,15 @@ export class UserApiService extends UserGateway {
    * @return {*}  {Observable<UserEntity>}
    * @memberof UserApiService
    */
-  override userLogin(userLogin: IUserLogin): Observable<UserEntity> {
+  userLogin(userLogin: IUserLogin): Observable<UserEntity> {
     return this.http.post<UserEntity>((`${environment.API_BASE_URL}/user/login/`), userLogin)
       .pipe(
         tap({
           next: (user) => {
+
             this.setUserToLocalStorage(user);
             this.userBehaviourSubject.next(user);
+
             this.toastrService.success(
               `Welcome to Fast Food Service ${user.userFullname}!`,
               'Login Successful')
@@ -75,6 +73,35 @@ export class UserApiService extends UserGateway {
         })
       );
   }
+
+
+
+  /**
+   * Allows to update the User information stored in DB
+   *
+   * @param {string} userId
+   * @param {IUserRegister} updatedUser
+   * @return {*}  {Observable<UserEntity>}
+   * @memberof UserApiService
+   */
+  updateUser(userId: string, updatedUser: IUserUpdate): Observable<UserEntity> {
+
+    let actualToken = this.getUserFromLocalStorage().token;
+
+    return this.http.patch<UserEntity>((`${environment.API_BASE_URL}/user/update/${userId}`), updatedUser)
+    .pipe(
+      map( (res: UserEntity) => {
+        const tempUser = res;
+        tempUser.token = actualToken;
+        this.setUserToLocalStorage(tempUser);
+        return tempUser;
+      })
+    )
+
+
+
+  }
+
 
 
   /**
@@ -97,25 +124,25 @@ export class UserApiService extends UserGateway {
    *
    * @memberof UserApiService
    */
-  override registerUser(newUser: IUserRegister): Observable<UserEntity> {
+  registerUser(newUser: IUserRegister): Observable<UserEntity> {
 
     return this.http.post<UserEntity>((`${environment.API_BASE_URL}/user/new/`), newUser)
-    .pipe(
-      tap({
-        next: (user) => {
-          this.setUserToLocalStorage(user);
-          this.userBehaviourSubject.next(user);
-          this.toastrService.success(
-            `Welcome to Fast Food Service ${user.userFullname}!`,
-            'Register Successful')
-        },
-        error: (errorResponse) => {
-          this.toastrService.error(
-            errorResponse.error,
-            'Register Failed!')
-        }
-      })
-    );
+      .pipe(
+        tap({
+          next: (user) => {
+            this.setUserToLocalStorage(user);
+            this.userBehaviourSubject.next(user);
+            this.toastrService.success(
+              `Welcome to Fast Food Service ${user.userFullname}!`,
+              'Register Successful')
+          },
+          error: (errorResponse) => {
+            this.toastrService.error(
+              errorResponse.error,
+              'Register Failed!')
+          }
+        })
+      );
   }
 
 
@@ -141,13 +168,10 @@ export class UserApiService extends UserGateway {
    * @return {*}  {Promise<UserCredential>}
    * @memberof UserApiService
    */
-  async loginWithFirebase(email: string, password: string): Promise<UserCredential>{
+  async loginWithFirebase(email: string, password: string): Promise<UserCredential> {
 
     return await signInWithEmailAndPassword(this.auth, email, password);
   }
-
-
-
 
   /**
    * Stores the current User data info in the LocalStorage

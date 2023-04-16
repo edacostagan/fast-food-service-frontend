@@ -56,6 +56,7 @@ export class LoginPageComponent implements OnInit {
         }).subscribe(() => {
 
           this.router.navigateByUrl(this.returnUrl);
+
         });
 
       })

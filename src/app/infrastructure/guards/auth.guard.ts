@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if (this.userService.currentUser.token) {
-      if (!this.userService.currentUser.userIsAdmin)
+      if (this.userService.currentUser.userIsAdmin === false)
       {
         return true;
       }

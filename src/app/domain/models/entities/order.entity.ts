@@ -13,8 +13,8 @@ export class OrderEntity {
 }
 
 export enum OrderStatusEnum{
-  WAITING_FOR_PAYMENT = 10,
-  INPROCESS = 20,
+  UNPAID = 10,
+  PROCESSING = 20,
   SHIPPED = 30,
   COMPLETED = 40,
   CANCELED = 50,
