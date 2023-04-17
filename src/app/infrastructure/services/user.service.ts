@@ -108,8 +108,9 @@ export class UserApiService extends UserGateway {
       )
   }
 
-
-
+updateCurrentUser(user: UserEntity): void{
+  this.userBehaviourSubject.next(user);
+}
   /**
    * Close the current open session of the user in the APP
    *

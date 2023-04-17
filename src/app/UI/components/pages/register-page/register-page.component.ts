@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserApiService } from '../../../../infrastructure/services/user.service';
 import { IUserRegister } from '../../../../domain/models/interfaces/user.interfaces';
-import { PasswordsMatchValidator } from '../../../../infrastructure/helpers/validators/password-match.validator';
+
 import { ToastrService } from 'ngx-toastr';
 
 /**
@@ -51,15 +51,14 @@ export class RegisterPageComponent implements OnInit {
       userAddress: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       userEmail: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
       userMobilePhone: ['', [Validators.maxLength(12)]],
-      userPassword: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      userPassword: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
       confirmPassword: ['', [Validators.required]]
-    }, {
-      Validators: PasswordsMatchValidator('userPassword', 'confirmPassword'),
-    });
+    },
+      { validators: passwordsMatchValidator() }
+    );
 
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
   }
-
 
   /**
    * Getter that simplifies the process of getting the controls of the form
@@ -111,8 +110,25 @@ export class RegisterPageComponent implements OnInit {
           error.message,
           'Register Failed!');
       })
-
   }
-
 }
 
+/**
+ * Verify password
+ */
+function passwordsMatchValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('userPassword')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    if (password && confirmPassword && password != confirmPassword) {
+
+      control.get('confirmPassword')?.setErrors({notMatch : true});
+
+      return {
+        passwordsDontMatch: true
+      }
+    }
+    return null;
+  }
+}

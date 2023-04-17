@@ -8,14 +8,9 @@ import { OrderStatusEnum } from '../../../app/domain/models/entities/order.entit
 export class OrderStatusNamePipe implements PipeTransform {
 
   transform(value: number): string {
-    try{
       const result = Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(value)];
       if(!result) return 'UNKNOWN';
       return  result;
-    }
-    catch (e) {
-      return 'UNKNOWN';
-    }
 
   }
 

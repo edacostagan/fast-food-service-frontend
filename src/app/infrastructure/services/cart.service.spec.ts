@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { CartService } from './cart.service';
 import { BehaviorSubject } from 'rxjs';
 import { CartEntity } from '../../../app/domain/models/entities/cart.entity';
+import { CartItemEntity } from 'src/app/domain/models/entities/cart-item.entity';
+import { MenuEntity } from 'src/app/domain/models/entities/menu.entity';
 
 
 describe('CartService', () => {
@@ -73,7 +75,75 @@ describe('CartService', () => {
     expect(storedCart).toEqual(new CartEntity());
 
   });
+  describe('RemoveFromCart', () => {
+    it('should remove item from cart', () => {
+      // arrange
+      const itemId = '001';
+      const mockCart: CartEntity = {
+        items: [
+          {
+            menu: {
+              _id: '001',
+              menuName: 'mock',
+              menuDescription: 'mock',
+              menuPrice: 100,
+              menuImageUrl: 'mock'
+            },
+            quantity: 1,
+            price: 100
+          }, {
+            menu: {
+              _id: '002',
+              menuName: 'mock',
+              menuDescription: 'mock',
+              menuPrice: 100,
+              menuImageUrl: 'mock'
+            },
+            quantity: 1,
+            price: 100
+          }
+
+        ],
+        totalPrice: 0,
+        itemsCount: 0
+      }
+      const expectedCart: CartEntity = {
+        items: [
+          {
+            menu: {
+              _id: '002',
+              menuName: 'mock',
+              menuDescription: 'mock',
+              menuPrice: 100,
+              menuImageUrl: 'mock'
+            },
+            quantity: 1,
+            price: 100
+          }
+
+        ],
+        totalPrice: 0,
+        itemsCount: 0
+      }
+      cartService.cart = mockCart;
+
+      // act
+      cartService.removeFromCart(itemId);
+
+      // assert
+      expect(cartService.cart).toEqual(expectedCart);
+    });
+
+    it('should update local storage', () => {
+      // arrange
+      spyOn(localStorage, 'setItem');
+
+      // act
+      cartService.removeFromCart('001');
+
+      // assert
+      expect(localStorage.setItem).toHaveBeenCalled();
+    });
+  });
+
 });
-
-
-

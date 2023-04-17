@@ -2,10 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterPageComponent } from './register-page.component';
 import { AppModule } from 'src/app/app.module';
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 describe('RegisterPageComponent', () => {
   let component: RegisterPageComponent;
   let fixture: ComponentFixture<RegisterPageComponent>;
+
+  let validatorFn: ValidatorFn;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -71,5 +74,52 @@ describe('RegisterPageComponent', () => {
     expect(component.registerForm.invalid).toBeTrue();
 
   });
+
+  describe('PasswordMatchValidator', () => {
+    let formBuilder: FormBuilder;
+
+    beforeEach(() => {
+      formBuilder = new FormBuilder();
+    });
+
+    it('should return true when the passwords match', () => {
+      // Arrange
+
+      const pass = component.registerForm.controls['userPassword'];
+      const confirm = component.registerForm.controls['confirmPassword'];
+
+      pass.setValue('123456');
+      confirm.setValue('123456');
+
+
+      const validator = pass.value === confirm.value;
+
+      // Act
+      const result = validator;
+
+      // Assert
+      expect(result).toBeTrue();
+    });
+
+     it('should return false when the passwords do not match', () => {
+      // Arrange
+      const pass = component.registerForm.controls['userPassword'];
+      const confirm = component.registerForm.controls['confirmPassword'];
+
+      pass.setValue('123456');
+      confirm.setValue('aaaa');
+
+      const validator = pass.value === confirm.value;
+
+      // Act
+      const result = validator;
+
+      // Assert
+      expect(result).toBeFalse();
+    });
+  });
+
+
+
 
 });

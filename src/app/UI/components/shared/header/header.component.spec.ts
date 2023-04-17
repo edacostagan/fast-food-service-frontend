@@ -9,6 +9,8 @@ import { AppModule } from 'src/app/app.module';
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let userService: UserApiService;
+
 
   //Arrange
   let userData: UserEntity = {
@@ -23,6 +25,9 @@ describe('HeaderComponent', () => {
 
 
   beforeEach(async () => {
+
+    userService = jasmine.createSpyObj('UserApiService', ['userLogout']);
+
     await TestBed.configureTestingModule({
       declarations: [],
       imports: [
@@ -60,6 +65,17 @@ describe('HeaderComponent', () => {
     const result = component.isAuth;
     //Assert
     expect(result).toEqual(userData.token);
+  });
+
+
+  it('should call userLogout method of userService', () => {
+    // Arrange
+
+    // Act
+    component.logout();
+
+    // Assert
+    expect(userService.userLogout).toHaveBeenCalled();
   });
 
 });

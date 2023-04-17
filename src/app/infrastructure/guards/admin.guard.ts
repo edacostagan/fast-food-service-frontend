@@ -13,7 +13,6 @@ export class AdminGuard implements CanActivate {
     private router: Router
   ){}
 
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -27,8 +26,5 @@ export class AdminGuard implements CanActivate {
 
       this.router.navigate(['/login'], {queryParams:{returnUrl: state.url}});
       return false;
-
-
   }
-
 }
