@@ -10,7 +10,7 @@
   </div>
   <hr>
 
-  <app-not-found [visible]="!orders || !orders.length" notFoundMessage="There are no {{getOrderStatusLabel(orderStatus)}} Orders!
+  <app-not-found [visible]="!orders || !orders.length" notFoundMessage="There are no {{orderStatus | orderStatusName}} Orders!
     (Check again every few minutes at least until we implement publisher/subscriber pattern :)"
     resetLinkText="Back to Homepage">
   </app-not-found>
@@ -49,9 +49,9 @@
                 Order Status:
               </label>
 
-              <!-- {{order.orderStatus | orderStatusName}} -->
+               {{order.orderStatus | orderStatusName}}
 
-              {{getOrderStatusLabel(order.orderStatus)}}
+              <!-- {{getOrderStatusLabel(order.orderStatus)}} -->
               <div class="btn-group-lg">
                 <button *ngIf="order.orderStatus === 20" (click)="changeOrderStatus(order._id, 30)"
                   class="btn btn-outline-warning m-1">
